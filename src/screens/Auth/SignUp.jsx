@@ -17,7 +17,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import { setItem } from "../../utils/AsyncStorage";
 
@@ -34,9 +34,13 @@ const SignUpScreen = () => {
       alert("Passwords don't match.");
       return;
     }
-  
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       await updateProfile(user, { displayName: name });
       console.log("done");
