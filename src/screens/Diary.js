@@ -17,17 +17,17 @@ import diaryHeader from "../assets/diaryHead.png";
 import { format } from "date-fns"; // Import this
 import Modal from "react-native-modal";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Audio } from 'expo-av';
+import { Audio } from "expo-av";
 import { setup } from "../assets/Sounds/AllSounds";
 import { getItem } from "../utils/AsyncStorage";
 import { LanguageContext } from "../context/LanguageContext";
-const Diary = ({props}) => {
+const Diary = ({ props }) => {
   const [beans, setBeans] = useState([]);
   const [selectedBean, setSelectedBean] = useState(null);
   const navigation = useNavigation();
-  let route = useRoute()
+  let route = useRoute();
   // alert(JSON.stringify(route.name))
-  console.log("Beans  = ",beans)
+  console.log("Beans  = ", beans);
   useEffect(() => {
     const fetchBeans = async () => {
       try {
@@ -46,17 +46,17 @@ const Diary = ({props}) => {
 
   // Sound Effect
   const [sound, setSound] = useState();
-  async function playSound (audioWillBe) {
-    console.log('Loading Sound');
+  async function playSound(audioWillBe) {
+    console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(audioWillBe);
     setSound(sound);
-    console.log('Playing Sound');
+    console.log("Playing Sound");
     await sound.playAsync();
   }
 
   const handleCenterPress = () => {
     // console.log('press')
-    playSound(setup)
+    playSound(setup);
     navigation.navigate("Home");
   };
   const handleBeanPress = (bean) => {
@@ -78,22 +78,29 @@ const Diary = ({props}) => {
     return () => backHandler.remove();
   }, []);
 
-  let dateFormate = (_date) =>{
+  let dateFormate = (_date) => {
     // let date = new Date();
-    let arr = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
+    let arr = [
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag",
+      "Sonntag",
+    ];
     let getDay = _date.getDay() - 1;
-    let germanDateWithDay = arr[getDay]+" "+_date.getDate();
-    console.log("Date = ",germanDateWithDay)
-    return germanDateWithDay 
-  }
+    let germanDateWithDay = arr[getDay] + " " + _date.getDate();
+    console.log("Date = ", germanDateWithDay);
+    return germanDateWithDay;
+  };
 
-
-  const { language ,setLanguage } = useContext(LanguageContext);
+  const { language, setLanguage } = useContext(LanguageContext);
   // let selectedLang = await getItem("language");
   // if(selectedLang == '1'){
   //   setLanguage('english')
   // }else{setLanguage('german')}
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -108,14 +115,26 @@ const Diary = ({props}) => {
           data={beans}
           keyExtractor={(item) => item.date}
           renderItem={({ item: group }) => (
-            <View key={group.date} style={{ marginHorizontal:10 }}>
-              <View style={{width:'100%',height:50,flexDirection:'row',marginLeft:-5}}>
-                <Text style={styles.dateHeading}> {language == 'english' ? format(new Date(group.date), "EEE d") : dateFormate(new Date(group.date))} </Text>
+            <View key={group.date} style={{ marginHorizontal: 10 }}>
+              <View
+                style={{
+                  width: "100%",
+                  height: 50,
+                  flexDirection: "row",
+                  marginLeft: -5,
+                }}
+              >
+                <Text style={styles.dateHeading}>
+                  {" "}
+                  {language == "english"
+                    ? format(new Date(group.date), "EEE d")
+                    : dateFormate(new Date(group.date))}{" "}
+                </Text>
                 <View style={styles.countContainer}>
                   <Text style={styles.count}>{group.beans.length}</Text>
                 </View>
               </View>
-              {group.beans.map((bean,index) => (
+              {group.beans.map((bean, index) => (
                 <TouchableOpacity
                   key={index}
                   onPress={() => handleBeanPress(group.beans[0])}
@@ -166,16 +185,21 @@ const Diary = ({props}) => {
       </Modal>
 
       <View style={styles.bottomSection}>
-        <TouchableOpacity onPress={()=>{
-          navigation.navigate('Donation');
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Donation");
+          }}
+        >
           <Image source={Document} style={styles.icon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleCenterPress}>
           <Image source={beansPlate} style={styles.largeIcon} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={diary} style={[styles.icon, {width:50,height:40}]} />
+          <Image
+            source={diary}
+            style={[styles.icon, { width: 50, height: 40 }]}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -186,7 +210,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor:'#cecac1'
-    backgroundColor:'red'
+    backgroundColor: "red",
   },
   topSection: {
     flex: 0.8,
@@ -216,7 +240,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#9a6041",
     width: 30,
     height: 30,
-    marginLeft :10,
+    marginLeft: 10,
     borderRadius: 20,
     // marginBottom : -40,
     alignItems: "center",
@@ -252,13 +276,13 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     width: "100%",
     // backgroundColor:"yellow",
-    borderBottomWidth:0.5,
-    borderBottomColor:"#000",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#000",
   },
   beanTextContainer: {
     // marginLeft: 10,
     // backgroundColor:'pink',
-    width:'65%'
+    width: "65%",
   },
   beanTime: {
     fontSize: 14,
@@ -292,8 +316,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     width: "80%",
     // marginLeft: 30,
-    marginBottom:5,
-    alignSelf:"center"
+    marginBottom: 5,
+    alignSelf: "center",
   },
   modal: {
     backgroundColor: "rgba(255, 255, 255, 0.85)",
