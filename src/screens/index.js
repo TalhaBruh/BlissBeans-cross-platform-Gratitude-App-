@@ -4,7 +4,7 @@ import SignUpScreen from "./Auth/SignUp";
 import SignInScreen from "./Auth/SignIn";
 import RegisterScreen from "./Auth/Register";
 import ForgotPassScreen from "./Auth/Forgot";
-import Basic  from "./AddMedicine/Basic";
+import Basic from "./AddMedicine/Basic";
 import LogoutScreen from "./Settings";
 import Donation from "./Donation";
 
@@ -17,5 +17,5 @@ export {
   ForgotPassScreen,
   Basic,
   LogoutScreen,
-  Donation
+  Donation,
 };
