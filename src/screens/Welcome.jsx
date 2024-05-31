@@ -15,9 +15,9 @@ import Document from "../assets/setup-icon.png";
 import granny from "../assets/granny.png";
 import beansPlate from "../assets/beansPlate.png";
 import Pill from "../assets/Pill.png";
-import diary from '../assets/diary-icon.png'
-import save from '../assets/save-icon.png'
-import photo from '../assets/photo-icon.png'
+import diary from "../assets/diary-icon.png";
+import save from "../assets/save-icon.png";
+import photo from "../assets/photo-icon.png";
 import { createBean } from "../utils/db";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import diaryHeader from "../assets/bean-blessbean.png";
@@ -27,16 +27,20 @@ import throwBeanGif from "../assets/Gif/throwBean.gif";
 import ThrowABeanGermen from "../assets/Gif/throwBeanGerman.gif";
 import smoke from "../assets/bean-swoosh.png";
 import beanImg from "../assets/bean.png";
-import LottieView from 'lottie-react-native';
-import * as Animatable from 'react-native-animatable';
-import { Audio } from 'expo-av';
-import { bean_animation,dry_pop,entry_list,setup } from "../assets/Sounds/AllSounds";
+import LottieView from "lottie-react-native";
+import * as Animatable from "react-native-animatable";
+import { Audio } from "expo-av";
+import {
+  bean_animation,
+  dry_pop,
+  entry_list,
+  setup,
+} from "../assets/Sounds/AllSounds";
 import { LanguageProvider, LanguageContext } from "../context/LanguageContext";
 import ImagePickerComp from "../components/ImageModal";
 
-
 const Welcome = (props) => {
-  let route = useRoute()
+  let route = useRoute();
   const [count, setCount] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [isPillVisible, setPillVisible] = useState(false);
@@ -46,8 +50,8 @@ const Welcome = (props) => {
   const increment = () => {
     // setCount(count + 1);
     setPillVisible(true);
-    setIsSaved(false)
-    playSound(bean_animation)
+    setIsSaved(false);
+    playSound(bean_animation);
     setTimeout(() => {
       setModalVisible(true);
       setPillVisible(false);
@@ -65,82 +69,77 @@ const Welcome = (props) => {
       setBean({ text: "", picture: null });
       setModalVisible(false);
       setCount(count + 1);
-      setIsSaved(true)
-      playSound(dry_pop)
+      setIsSaved(true);
+      playSound(dry_pop);
     } catch (error) {
       console.error(`Error creating bean: ${error}`);
     }
   };
 
-  const [imageModal, setImageModal] = useState(false)
-  const [result, setResult] = useState(null)
-  const handleImageResponse = (_data) =>{
+  const [imageModal, setImageModal] = useState(false);
+  const [result, setResult] = useState(null);
+  const handleImageResponse = (_data) => {
     // console.log("Data = ",_data)
-    setResult(_data)
-    setImageModal(false)
+    setResult(_data);
+    setImageModal(false);
     if (_data) {
       setBean({ ...bean, picture: _data.assets[0].uri });
     }
-  }
+  };
   const selectImage = async () => {
-    playSound(setup)
-    setImageModal(true)
+    playSound(setup);
+    setImageModal(true);
   };
 
   //Exit from app When back Press
   useEffect(() => {
     const backAction = () => {
-      Alert.alert(
-        "Hold on!",
-        "Are you sure you want to exit from app?",
-        [
-          { text: "Cancel", onPress: () => null, style: "cancel" },
-          { text: "YES", onPress: () => BackHandler.exitApp() }
-        ]
-      );
+      Alert.alert("Hold on!", "Are you sure you want to exit from app?", [
+        { text: "Cancel", onPress: () => null, style: "cancel" },
+        { text: "YES", onPress: () => BackHandler.exitApp() },
+      ]);
       return true;
     };
- 
-    if(route.name == "Home"){
-        BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      )}
- 
+
+    if (route.name == "Home") {
+      BackHandler.addEventListener("hardwareBackPress", backAction);
+    }
+
     // return () => backHandler.remove();
   }, []);
 
   // Sound Effect
   const [sound, setSound] = useState();
-  async function playSound (audioWillBe) {
-    console.log('Loading Sound');
+  async function playSound(audioWillBe) {
+    console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(audioWillBe);
     setSound(sound);
-    console.log('Playing Sound');
+    console.log("Playing Sound");
     await sound.playAsync();
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     checkWhichLangIsSelected();
-  },[])
-  const { language ,setLanguage } = useContext(LanguageContext);
-  const checkWhichLangIsSelected = async() =>{
+  }, []);
+  const { language, setLanguage } = useContext(LanguageContext);
+  const checkWhichLangIsSelected = async () => {
     let selectedLang = await getItem("language");
-    if(selectedLang == '1'){
-      setLanguage('english')
-    }else{setLanguage('german')}
+    if (selectedLang == "1") {
+      setLanguage("english");
+    } else {
+      setLanguage("german");
+    }
   };
 
   const animation = React.useRef(null);
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
-
-        <Animatable.View 
-          animation="bounceIn" 
+        <Animatable.View
+          animation="bounceIn"
           duration={2000} // Adjust duration as needed
           // iterationCount={'infinite'}
-          style={{ justifyContent: 'center', alignItems: 'center' }}
+          style={{ justifyContent: "center", alignItems: "center" }}
         >
           <Image
             source={diaryHeader}
@@ -155,10 +154,19 @@ const Welcome = (props) => {
           </View>
         </Animatable.View>
         <TouchableOpacity
-        style={{height:120,width:100, position: 'absolute', top: 105, right:25,}}
-        onPress={()=>{navigation.navigate('Onboarding')}}>
+          style={{
+            height: 120,
+            width: 100,
+            position: "absolute",
+            top: 105,
+            right: 25,
+          }}
+          onPress={() => {
+            navigation.navigate("Onboarding");
+          }}
+        >
           <Image
-            source={language == 'english' ? message : germanMessage}
+            source={language == "english" ? message : germanMessage}
             style={styles.messageImage}
             resizeMode="contain"
           />
@@ -166,14 +174,19 @@ const Welcome = (props) => {
       </View>
 
       <View style={styles.bottomSection}>
-        <TouchableOpacity onPress={()=>{
-          setModalVisible(false);
-          navigation.navigate('Donation');
-        }}>
-          <Image source={Document} style={[styles.icon,{width:50,height:50}]} />
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(false);
+            navigation.navigate("Donation");
+          }}
+        >
+          <Image
+            source={Document}
+            style={[styles.icon, { width: 50, height: 50 }]}
+          />
         </TouchableOpacity>
         <Image
-          source={language =='english' ? throwBeanGif : ThrowABeanGermen}
+          source={language == "english" ? throwBeanGif : ThrowABeanGermen}
           style={styles.throwBeanImage}
           resizeMode="contain"
         />
@@ -181,81 +194,127 @@ const Welcome = (props) => {
           <Image source={beansPlate} style={styles.largeIcon} />
           {/* {isPillVisible && <Image source={Pill} style={styles.pill} />} */}
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{
-          navigation.navigate('Diary');
-          playSound(entry_list)
-          setIsSaved(false)
-        }}>
-          <Image source={diary} style={[styles.icon,{width:45,height:40}]} />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Diary");
+            playSound(entry_list);
+            setIsSaved(false);
+          }}
+        >
+          <Image
+            source={diary}
+            style={[styles.icon, { width: 45, height: 40 }]}
+          />
         </TouchableOpacity>
       </View>
 
       {/* Bean Movin from plate */}
-      {isModalVisible  ?
-        <View style={{height:'10%',width:"30%",position:'absolute',bottom:80,left:120}}>
+      {isModalVisible ? (
+        <View
+          style={{
+            height: "10%",
+            width: "30%",
+            position: "absolute",
+            bottom: 80,
+            left: 120,
+          }}
+        >
           <LottieView
             autoPlay
             ref={animation}
             style={{
-                width:'100%',
-                height: '100%',
-                // backgroundColor: '#eee',
+              width: "100%",
+              height: "100%",
+              // backgroundColor: '#eee',
             }}
-            loop = {false}
-            source={require('../assets/Animations/bean (10).json')}
-          /> 
-        </View>: ''}
-      
+            loop={false}
+            source={require("../assets/Animations/bean (10).json")}
+          />
+        </View>
+      ) : (
+        ""
+      )}
+
       {/* Bean going to pocket */}
-      <View style={{height:'70%',width:"100%",position:'absolute',top:140,right:50,}}>
-        {isSaved ? 
+      <View
+        style={{
+          height: "70%",
+          width: "100%",
+          position: "absolute",
+          top: 140,
+          right: 50,
+        }}
+      >
+        {isSaved ? (
           <LottieView
-          autoPlay
-          ref={animation}
-          style={{
-              width:'100%',
-              height: '90%',
-              marginTop:50,
-              paddingTop:50,
+            autoPlay
+            ref={animation}
+            style={{
+              width: "100%",
+              height: "90%",
+              marginTop: 50,
+              paddingTop: 50,
               // backgroundColor:'#fff'
-          }}
-          loop = {false}
-          source={require('../assets/Animations/bean (9).json')}
-        /> : ''}
+            }}
+            loop={false}
+            source={require("../assets/Animations/bean (9).json")}
+          />
+        ) : (
+          ""
+        )}
         {
           // Smoke Animation
-          <View style={{height:'70%',width:"100%",position:'absolute',bottom:0,left:20}}>
-            {isSaved ? 
+          <View
+            style={{
+              height: "70%",
+              width: "100%",
+              position: "absolute",
+              bottom: 0,
+              left: 20,
+            }}
+          >
+            {isSaved ? (
               <LottieView
-              autoPlay
-              ref={animation}
-              style={{
-                  width:'100%',
-                  height: '90%',
-                  marginTop:50,
-                  paddingTop:50,
+                autoPlay
+                ref={animation}
+                style={{
+                  width: "100%",
+                  height: "90%",
+                  marginTop: 50,
+                  paddingTop: 50,
                   // backgroundColor:'#fff'
-              }}
-              loop = {false}
-              source={require('../assets/Animations/bean-swoosh.json')}
-            /> : ''}
+                }}
+                loop={false}
+                source={require("../assets/Animations/bean-swoosh.json")}
+              />
+            ) : (
+              ""
+            )}
           </View>
         }
       </View>
 
-      <Modal 
-        isVisible={isModalVisible} 
-        backdropOpacity={0.1} 
+      <Modal
+        isVisible={isModalVisible}
+        backdropOpacity={0.1}
         onBackdropPress={() => {
-          setModalVisible(false)
+          setModalVisible(false);
         }}
       >
         <View style={styles.modal}>
           <View style={styles.triangle} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between',width:'100%' }}> 
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <View style={styles.modalLeft}>
               <Text style={styles.modalHeading}>
-                {language == 'english' ?`Write your today's happiness moment` : `Hinterlasse hier deinen heutigen Happy Moment!`}
+                {language == "english"
+                  ? `Write your today's happiness moment`
+                  : `Hinterlasse hier deinen heutigen Happy Moment!`}
               </Text>
 
               <TextInput
@@ -267,39 +326,82 @@ const Welcome = (props) => {
             </View>
 
             {bean.picture ? (
-              <View style={{alignItems:"center", justifyContent:"center",width:'33%'}}>
-                <Image source={{ uri: bean.picture }} style={styles.InputImage} />
-                
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "33%",
+                }}
+              >
+                <Image
+                  source={{ uri: bean.picture }}
+                  style={styles.InputImage}
+                />
               </View>
             ) : (
               <Text style={{ fontSize: 100, marginRight: 20 }}>+</Text>
             )}
-          </View> 
+          </View>
 
-          <View style={styles.buttons}> 
-          
-            
+          <View style={styles.buttons}>
             <TouchableOpacity onPress={handleSave}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' , gap:5, alignContent : 'center',}}>
-             
-              <Image source={save} style={[styles.icon,{width:30,height:30}]} />
-              <Text style = {{color :'#9a6041',alignSelf:'center',fontSize:11}}>{language == 'english' ? `Save Entry` : 'Eintrag speichern'}</Text>
-            </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={selectImage} >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' , gap:5, alignContent : 'center'}}>
-              <Text style = {{color :'#9a6041',alignSelf:'center',fontSize:11}}>{language == 'english' ? `Got a photo` : 'Foto gemacht?'}</Text>
-              <Image source={photo} style={[styles.icon,{width:30,height:30}]} />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  gap: 5,
+                  alignContent: "center",
+                }}
+              >
+                <Image
+                  source={save}
+                  style={[styles.icon, { width: 30, height: 30 }]}
+                />
+                <Text
+                  style={{
+                    color: "#9a6041",
+                    alignSelf: "center",
+                    fontSize: 11,
+                  }}
+                >
+                  {language == "english" ? `Save Entry` : "Eintrag speichern"}
+                </Text>
               </View>
             </TouchableOpacity>
-          </View> 
+            <TouchableOpacity onPress={selectImage}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  gap: 5,
+                  alignContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#9a6041",
+                    alignSelf: "center",
+                    fontSize: 11,
+                  }}
+                >
+                  {language == "english" ? `Got a photo` : "Foto gemacht?"}
+                </Text>
+                <Image
+                  source={photo}
+                  style={[styles.icon, { width: 30, height: 30 }]}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
 
-      <ImagePickerComp 
+      <ImagePickerComp
         isVisible={imageModal}
         ImageResult={handleImageResponse}
-        onCloseModal = {(res)=> {setImageModal(res)}}
+        onCloseModal={(res) => {
+          setImageModal(res);
+        }}
       />
     </View>
   );
@@ -308,7 +410,7 @@ const Welcome = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#cecac1'
+    backgroundColor: "#cecac1",
   },
   topSection: {
     flex: 0.8,
@@ -328,7 +430,7 @@ const styles = StyleSheet.create({
   InputImage: {
     width: 100,
     height: 100,
-    resizeMode:'contain'
+    resizeMode: "contain",
   },
   heading: {
     fontSize: 24,
@@ -341,7 +443,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: "90%",
     marginTop: 20,
-    marginTop:50
+    marginTop: 50,
   },
   image: {
     width: "100%",
@@ -360,8 +462,8 @@ const styles = StyleSheet.create({
   },
   count: {
     color: "white",
-    fontSize:16,
-    fontWeight:'800'
+    fontSize: 16,
+    fontWeight: "800",
   },
 
   bottomSection: {
@@ -417,7 +519,7 @@ const styles = StyleSheet.create({
   modalLeft: {
     gap: 30,
     // backgroundColor:'green',
-    width:'70%'
+    width: "70%",
   },
   modalHeading: {
     color: "#9a6041",
@@ -426,37 +528,38 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     // backgroundColor:'yellow'
   },
-  buttons :{
-    display : 'flex',
-    flexDirection : 'row',
-    justifyContent : 'space-between',
-    width : '100%'
-
+  buttons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
   headerImage: {
     width: "100%",
     height: 150,
     zIndex: 1,
-    position: 'absolute', top: 30
+    position: "absolute",
+    top: 30,
   },
   messageImage: {
     width: "100%",
     height: 100,
     // position: 'absolute', top: 105, right:25,
-    resizeMode:'cover'
+    resizeMode: "cover",
   },
   throwBeanImage: {
     width: "30%",
     height: 100,
-    position: 'absolute', right:90,bottom:130,
-    resizeMode:'cover'
+    position: "absolute",
+    right: 90,
+    bottom: 130,
+    resizeMode: "cover",
   },
   topHeader: {
     width: "100%",
     height: 100,
     marginBottom: -20,
   },
-
 });
 
 export default Welcome;
