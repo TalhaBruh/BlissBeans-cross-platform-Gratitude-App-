@@ -38,7 +38,6 @@ export default function AppNavigation() {
     return null;
   }
 
-
   return (
     <LanguageProvider>
       <NavigationContainer>
