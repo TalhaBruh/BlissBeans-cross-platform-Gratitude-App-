@@ -70,7 +70,17 @@ export const MedicineProvider = ({ children }) => {
   }, [medicines, isUserSignedIn, user]);
 
   return (
-    <MedicineContext.Provider value={{ medicines, setMedicines, saveMedicine, user, setUser,isUserSignedIn,setIsUserSignedIn }}>
+    <MedicineContext.Provider
+      value={{
+        medicines,
+        setMedicines,
+        saveMedicine,
+        user,
+        setUser,
+        isUserSignedIn,
+        setIsUserSignedIn,
+      }}
+    >
       {children}
     </MedicineContext.Provider>
   );
