@@ -4,7 +4,7 @@ export const setItem = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, value);
   } catch (error) {
-    console.log("Error");
+    console.log("Error Setting item");
   }
 };
 
