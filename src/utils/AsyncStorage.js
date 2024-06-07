@@ -13,7 +13,7 @@ export const getItem = async (key) => {
     const value = await AsyncStorage.getItem(key);
     return value;
   } catch (error) {
-    console.log("Error");
+    console.log("Error getting Item");
   }
 };
 
