@@ -27,7 +27,7 @@ export const createBean = async (time_created, description, picture_uri) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "insert into beans (time_created, description, picture_uri) values (?, ?, ?);",
+        "Insert into beans (time_created, description, picture_uri) values (?, ?, ?);",
         [time_created, description, picture_uri],
         (_, { insertId }) => resolve(insertId),
         (_, error) => reject(error)
