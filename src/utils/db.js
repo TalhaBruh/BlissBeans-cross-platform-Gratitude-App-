@@ -55,7 +55,7 @@ export const removeBeanById = async (id) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "delete from beans where id = ?;",
+        "Delete from beans where id = ?;",
         [id],
         (_, { rowsAffected }) => resolve(rowsAffected),
         (_, error) => reject(error)
