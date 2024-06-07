@@ -13,7 +13,7 @@ export const getAllBeans = async () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "select * from beans;",
+        "Select * from beans;",
         [],
         (_, { rows }) => resolve(rows._array),
         (_, error) => reject(error)
