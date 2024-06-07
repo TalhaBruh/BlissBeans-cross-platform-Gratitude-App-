@@ -41,7 +41,7 @@ export const getBeansByDay = async (day) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "select * from beans where time_created = ?;",
+        "Select * from beans where time_created = ?;",
         [day],
         (_, { rows }) => resolve(rows._array),
         (_, error) => reject(error)
