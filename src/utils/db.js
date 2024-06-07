@@ -4,7 +4,7 @@ const db = SQLite.openDatabase("beans.db");
 
 db.transaction((tx) => {
   tx.executeSql(
-    "create table if not exists beans (id integer primary key not null, time_created text, description text, picture_uri text);"
+    "Create table if not exists beans (id integer primary key not null, time_created text, description text, picture_uri text);"
   );
 });
 
