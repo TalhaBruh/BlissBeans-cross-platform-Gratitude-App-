@@ -263,7 +263,7 @@ const Welcome = (props) => {
           ""
         )}
         {
-          // Smoke Animation
+          // Added Smoke Animation
           <View
             style={{
               height: "70%",
