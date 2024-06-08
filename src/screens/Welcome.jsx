@@ -518,7 +518,6 @@ const styles = StyleSheet.create({
   },
   modalLeft: {
     gap: 30,
-    // backgroundColor:'green',
     width: "70%",
   },
   modalHeading: {
