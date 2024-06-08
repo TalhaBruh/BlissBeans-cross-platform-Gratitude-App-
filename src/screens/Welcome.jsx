@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
   },
   triangle: {
     position: "absolute",
-    left: 20, // Adjust this
+    left: 20,
     bottom: -70, 
     width: 0,
     height: 0,
