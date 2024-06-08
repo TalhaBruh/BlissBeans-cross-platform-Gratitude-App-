@@ -544,7 +544,6 @@ const styles = StyleSheet.create({
   messageImage: {
     width: "100%",
     height: 100,
-    // position: 'absolute', top: 105, right:25,
     resizeMode: "cover",
   },
   throwBeanImage: {
