@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
   triangle: {
     position: "absolute",
     left: 20, // Adjust this
-    bottom: -70, // Adjust this
+    bottom: -70, 
     width: 0,
     height: 0,
     backgroundColor: "transparent",
