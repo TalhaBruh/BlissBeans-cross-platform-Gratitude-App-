@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
     height: 0,
     backgroundColor: "transparent",
     borderStyle: "solid",
-    borderLeftWidth: 10, // Increase this
+    borderLeftWidth: 10, 
     borderRightWidth: 30, 
     borderTopWidth: 70, 
     borderLeftColor: "transparent",
