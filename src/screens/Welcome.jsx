@@ -526,7 +526,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     maxWidth: "90%",
-    // backgroundColor:'yellow'
   },
   buttons: {
     display: "flex",
