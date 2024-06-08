@@ -510,8 +510,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderStyle: "solid",
     borderLeftWidth: 10, // Increase this
-    borderRightWidth: 30, // Increase this
-    borderTopWidth: 70, // Increase this
+    borderRightWidth: 30, 
+    borderTopWidth: 70, 
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     borderTopColor: "rgba(255, 255, 255, 0.85)",
